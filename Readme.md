@@ -19,7 +19,7 @@ node server/index.js
 This will generate some dummy data to populate the api, as well as spin up a server at http://localhost:3000. Any files you put into the client folder will accessible.
 
 API Definition:
-
+```
 /documents GET
   
   Gets the a collection of documents.
@@ -41,3 +41,4 @@ API Definition:
         ]
       },
     ]
+```
