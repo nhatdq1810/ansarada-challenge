@@ -1,0 +1,19 @@
+{
+  "name": "coding-challenge",
+  "version": "1.0.0",
+  "description": "Ansarada Coding Challenge",
+  "main": "server/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ansarada",
+  "license": "proprietary",
+  "dependencies": {
+    "body-parser": "^1.10.2",
+    "btoa": "^1.1.2",
+    "express": "^4.9.0",
+    "lodash": "^2.4.1",
+    "nedb": "^1.1.1",
+    "q": "^1.1.2"
+  }
+}
