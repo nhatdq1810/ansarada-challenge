@@ -10,6 +10,14 @@ You should consider how you would implement these features, so we can discuss at
 Feel free to use any framework/libraries to do this task.
 Also feel free to change the mock server located in /server however you see fit.
 
+To get started, install NodeJS and then run (in the project folder):
+
+```
+npm install
+node server/index.js
+```
+This will generate some dummy data to populate the api, as well as spin up a server at http://localhost:3000. Any files you put into the client folder will accessible.
+
 API Definition:
 
 /documents GET
