@@ -3,6 +3,7 @@ Your task is to create an application to view a list of documents.
 An API has been defined that will return a list of folders and documents. Its expected that only the top level documents are shown initially. When you click on a folder, it should query the API for more data and update the view accordingly.
 
 You should consider how you would implement these features, so we can discuss at a later time:
+
   - Have a search input that will filter results to those that have its name or number match the search field
   - Have a button that will expand all the children, and another that will collapse all the children
   - Have a context menu pop up that shows the file size of the document when clicked
