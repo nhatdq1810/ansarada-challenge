@@ -1,4 +1,4 @@
-Your task is to create the MVP of an application to view a list of documents:
+Your task is to create the base implementation of an application to view a list of documents:
 
   - An API has been defined that will return a list of folders and documents. 
   - Its expected that only the top level documents are shown initially.
@@ -9,7 +9,7 @@ The purpose of this task is two fold:
   - We want to see how you code
   - We want to see how you think and communicate
 
-To that end, you should write a quick paragraph describing how you would extend the MVP to add the following features:
+To that end, you should write a quick paragraph describing how you would extend the base implementation to add the following features:
 
   - Have a search input that will filter results to those that have its name or number match the search field
   - Have a button that will expand all the children, and another that will collapse all the children
@@ -17,7 +17,7 @@ To that end, you should write a quick paragraph describing how you would extend 
   
 You do not need to actually build the extra features as part of the test.
 
-Details on building the MVP:
+Details on building the base implementation:
 
   - Feel free to use any framework or libraries to do this task.
   - Also feel free to change the mock server located in /server however you see fit.
