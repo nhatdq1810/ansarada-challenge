@@ -1,21 +1,27 @@
-Your task is to create the base implementation of an application to view a list of documents:
-
-  - An API has been defined that will return a list of folders and documents. 
-  - Its expected that only the top level documents are shown initially.
-  - When you click on a folder, it should query the API for more data and update the view accordingly.
-
-The purpose of this task is two fold:
+The purpose of this code test is two fold:
 
   - We want to see how you code
   - We want to see how you think and communicate
 
-To that end, you should write a quick paragraph describing how you would extend the base implementation to add the following features:
+# Part 1
+
+Your task is to create the base implementation of an application to view a list of documents:
+
+  - An API has been defined that will return a list of folders and documents. 
+  - Its expected that only the top level documents are shown when the page first loads.
+  - When you click on a folder, it should query the API for more data and update the view accordingly.
+
+# Part 2
+
+Briefly describe how you would extend the base implementation to add the following features:
 
   - Have a search input that will filter results to those that have its name or number match the search field
   - Have a button that will expand all the children, and another that will collapse all the children
   - Have a context menu pop up that shows the file size of the document when clicked
   
 You do not need to actually build the extra features as part of the test.
+
+# Details
 
 Details on building the base implementation:
 
@@ -57,3 +63,15 @@ API Definition:
       },
     ]
 ```
+
+# Sending in your results
+
+Along with a zip with code for part one, include answers below.
+
+## Your thoughts for Part 2
+
+(answers here)
+
+## What did you think of this coding task?
+
+(feedback here, if any)
