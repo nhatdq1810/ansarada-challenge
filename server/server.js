@@ -14,6 +14,7 @@ app
     var latency = parseInt(process.env.LATENCY || config.mock_server.latency, 10) || 0;
     setTimeout(next, (0.8 + Math.random() * 0.4) * latency);
   })
+  .use(require('cors')())
   .use(express.static('client'));
 
 //Creating stores
