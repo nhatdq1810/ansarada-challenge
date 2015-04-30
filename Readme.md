@@ -1,37 +1,36 @@
-The purpose of this code test is two fold:
+# The non-coding code test
 
-  - We want to see how you code
-  - We want to see how you think and communicate
+The purpose of this 'code test' is to set the scene for an in-person interview.
 
-# Part 1
+NOTE: you don't need to actually build the code. You should think about how you would approach it and be ready to describe and discuss the decisions. We want to find out how you think, how you approach problems and how you communicate your decision and solutions.
 
-Your task is to create the base implementation of an application to view a list of documents:
+# The Core Task/Challenge
+
+The MVP task is to create the base implementation of an application to view a list of documents:
 
   - An API has been defined that will return a list of folders and documents. 
   - Its expected that only the top level documents are shown when the page first loads.
   - When you click on a folder, it should query the API for more data and update the view accordingly.
 
-# Part 2
+# Version 2
 
-Briefly describe how you would extend the base implementation to add the following features:
+The next round of work will extend the base implementation to add the following features:
 
   - Have a search input that will filter results to those that have its name or number match the search field
   - Have a button that will expand all the children, and another that will collapse all the children
   - Have a context menu pop up that shows the file size of the document when clicked
-  
-You do not need to actually build the extra features as part of the test.
 
 # Details
 
 Details on building the base implementation:
 
-  - Feel free to use any framework or libraries to do this task.
-  - Also feel free to change the mock server located in /server however you see fit.
+  - Frameworks and libraries can be used
+  - The server response can be modified
   - There are design mockups included in /designs to guide the look and feel.
 
-Note that this task would take quite a long time if you did every possible thing - it is expected that you will set a time limit and prioritise the tasks which best demonstrate the skills most relevant to the role.
+# Viewing the mock server
 
-To get started, install NodeJS and then run (in the project folder):
+Reminder - you don't need to build the solution. But if you want to view the mock server, install NodeJS and then run (in the project folder):
 
 ```
 npm install
@@ -63,15 +62,3 @@ API Definition:
       },
     ]
 ```
-
-# Sending in your results
-
-Along with a zip with code for part one, include answers below.
-
-## Your thoughts for Part 2
-
-(answers here)
-
-## What did you think of this coding task?
-
-(feedback here, if any)
