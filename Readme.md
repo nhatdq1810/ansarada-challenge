@@ -36,7 +36,7 @@ Reminder - you don't need to build the solution. But if you want to view the moc
 npm install
 node server/index.js
 ```
-This will generate some dummy data to populate the api, as well as spin up a server at http://localhost:5000. Any files you put into the `client` folder will accessible.
+This will generate some dummy data to populate the api, as well as spin up a server at http://localhost:3000. Any files you put into the `client` folder will accessible.
 
 API Definition:
 ```
