@@ -16,7 +16,7 @@ The MVP task is to create the base implementation of an application to view a li
 
 The next round of work will extend the base implementation to add the following features:
 
-  - Have a search input that will filter results to those that have its name or number match the search field
+  - Have a search input that will show results (from all possible documents) to those that have its name or number match the search field
   - Have a button that will expand all the children, and another that will collapse all the children
   - Have a context menu pop up that shows the file size of the document when clicked
 
