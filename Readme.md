@@ -41,11 +41,13 @@ This will generate some dummy data to populate the api, as well as spin up a ser
 API Definition:
 ```
 /documents GET
-  
-  Gets the a collection of documents.
+
+  Gets a collection of documents.
 
   Params:
-    parentId - Gets the children of a particular parent. By default, it returns the top level documents.
+    parentId - int - Gets the children of a particular parent. By default, it returns the top level documents (parentId == null).
+    search - string - Filters the query to documents that match the name and number or has a child that matches that name or number.
+    includeChildren - 1 or 0. Includes the children of the found documents, filtered also by 'search'
 
   Returns:
     [
@@ -57,7 +59,7 @@ API Definition:
         number : "Number of the document",
         fileSize : 1234556,
         children : [
-          //List of this folder's children, if requested
+          //List of this folder's children if includeChildren
         ]
       },
     ]

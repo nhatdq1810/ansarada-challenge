@@ -31,62 +31,48 @@ function qExpressJson(func){
 //Hooking up basic api
 function constructChildren(documents, parentId){
   parentId = parentId || null;
-  return _.reduce(documents, function(array, document){
-    if(document.parentId === parentId){
-      array.push(document);
+  var documentsMap = _.indexBy(documents, 'id');
+  var rootChildren = [];
+  _.each(documents, function(document){
+    var childrenArray;
+    if(document.parentId !== parentId){
+      var parent = documentsMap[document.parentId];
+      if(!parent) return;
+      if(!parent.children) parent.children = [];
+      childrenArray = parent.children;
     } else {
-      var parent = _.find(documents, {id : document.parentId});
-      if(parent){
-        if(!parent.children){
-          parent.children = [];
-        }
-        parent.children.push(document);
-      }
+      childrenArray = rootChildren;
     }
-
-    return array;
-  },[]);
+    childrenArray.push(document);
+  });
+  return rootChildren;
 }
 var queryDocuments = function(req){
   var params = {},
-    parentId = req.query.parentId,
-    expandedFolders = req.query.expandedFolders,
+    parentId = parseInt(req.query.parentId, 10) || null,
     search = req.query.search,
-    expandAll = !!req.query.expanded || false,
-    parentIds;
-
-  if(parentId !== undefined){
-    parentId = parseInt(parentId, 10) || null;
-  }
-  if(expandedFolders){
-    expandedFolders = _.map( (expandedFolders || '').split(','), function(str){
-      return parseInt(str, 10);
-    });
-  }
-
-  if(parentId !== undefined || expandedFolders){
-    parentIds = (parentId === undefined) ? [] : [parentId];
-    parentIds.push.apply(parentIds, expandedFolders || []);
-  } else {
-    parentIds = [];
-  }
-
+    includeChildren = req.query.includeChildren === '1' || false;
 
   if(search){
-    params.number = params.name = new RegExp(search, 'i');
+    var searchRegExp = new RegExp(search, 'i');
+    params['$or'] = [{ number: searchRegExp }, { name: searchRegExp }];
   }
-
-  params.type = {
-    '$ne' : 'folder'
-  };
-
-  if(parentId){
-    params.ancestor = parentId;
+  
+  if(parentId != null){
+    params.ancestor = { $elemMatch: parentId };
   }
 
   return db.documents.qfind(params).then(function(documents){
     var ids = _.chain(documents)
       .map(_.property('ancestor'))
+      .map(function(ancestor){
+        if(parentId != null){
+          var index = ancestor.indexOf(parentId);
+          var value = _.take(ancestor, index);
+          return value;
+        }
+        return ancestor;
+      })
       .flatten()
       .unique()
       .value();
@@ -98,19 +84,11 @@ var queryDocuments = function(req){
       }
     };
 
-    if(expandAll){
-      //Do nothing, it should find it all by default
-    } else if(parentIds.length){
-      folderParams.parentId = {
-        '$in' : parentIds
-      };
-    }
-
     return db.documents.qfind(folderParams).then(function(folders){
-      var filteredDocuments = _.filter(documents, function(document){
-        return expandAll || !!~parentIds.indexOf(document.parentId);
-      });
-      return constructChildren(utils.sort(filteredDocuments.concat(folders)), parentId);
+      var filteredDocuments = _.chain(documents).concat(folders).filter(function(document){
+        return includeChildren || document.parentId == parentId;
+      }).uniq(false, 'id').value();
+      return constructChildren(utils.sort(filteredDocuments), parentId);
     });
   });
 };
