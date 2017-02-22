@@ -1,10 +1,19 @@
 # The non-coding code test
 
-The purpose of this 'code test' is to set the scene for an in-person interview.
+The purpose of this 'code test' is to set the scene for an in-person interview. 
 
-NOTE: you don't need to actually build the code. You should think about how you would approach it and be ready to describe and discuss the decisions. We want to find out how you think, how you approach problems and how you communicate your decision and solutions.
+Think about how you would approach the task and be ready to describe and discuss the decisions. We want to find out how you think, how you approach problems and how you communicate your decision and solutions.
+
+NOTE: **don't actually build the code**. What you should do:
+
+1. Imagine you have received this task as a JIRA - what estimate would you put on this JIRA and why?
+2. You may like to make a dot-point list about how you would build the code, to help you remember the details in the interview.
+
+As a rough guide, we don't expect you to spend more than about 15 minutes reading through the challenge and thinking about your approach.
 
 # The Core Task/Challenge
+
+## MVP / Version 1
 
 The MVP task is to create the base implementation of an application to view a list of documents:
 
@@ -12,7 +21,7 @@ The MVP task is to create the base implementation of an application to view a li
   - Its expected that only the top level documents are shown when the page first loads.
   - When you click on a folder, it should query the API for more data and update the view accordingly.
 
-# Version 2
+## Version 2
 
 The next round of work will extend the base implementation to add the following features:
 
