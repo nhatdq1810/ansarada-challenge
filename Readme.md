@@ -6,7 +6,7 @@ Think about how you would approach the task and be ready to describe and discuss
 
 NOTE: **don't actually build the code**. What you should do:
 
-1. Imagine you have received this task as a JIRA - what estimate would you put on this JIRA and why?
+1. Imagine you have received this task as a JIRA and think about how you are going to build it.
 2. You may like to make a dot-point list about how you would build the code, to help you remember the details in the interview.
 
 As a rough guide, we don't expect you to spend more than about 15 minutes reading through the challenge and thinking about your approach.
