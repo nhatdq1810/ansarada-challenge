@@ -33,9 +33,12 @@ The next round of work will extend the base implementation to add the following 
 
 Details on building the base implementation:
 
-  - Frameworks and libraries can be used
-  - The server response can be modified
+  - Think of this as a green-fields/new build with freedom to choose whatever you feel is best.
+  - Frameworks and libraries can be used.
+  - The server response can be modified.
   - There are design mockups included in /designs to guide the look and feel.
+  - We prefer responsive apps, vs building separate desktop and mobile apps.
+  - Our browser support can be seen at https://dataroom.ansarada.com/_Login/BrowserSupport.asp
 
 # Viewing the mock server
 
