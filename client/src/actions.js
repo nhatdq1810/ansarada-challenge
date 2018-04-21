@@ -3,6 +3,7 @@ const FETCH_DOCUMENTS = {
   SUCCESS: 'FETCH_DOCUMENTS_SUCCESS',
   ERROR: 'FETCH_DOCUMENTS_ERROR',
 };
+const TOGGLE_FOLDER = 'TOGGLE_FOLDER';
 
 const fetchDocuments = {
   start(payload) {
@@ -24,8 +25,14 @@ const fetchDocuments = {
     }
   },
 }
+const toggleFolder = (payload) => {
+  return {
+    type: TOGGLE_FOLDER,
+    payload,
+  };
+};
 
-const actions = { fetchDocuments };
-const actionTypes = { FETCH_DOCUMENTS };
+const actions = { fetchDocuments, toggleFolder };
+const actionTypes = { FETCH_DOCUMENTS, TOGGLE_FOLDER };
 
 export { actions, actionTypes };

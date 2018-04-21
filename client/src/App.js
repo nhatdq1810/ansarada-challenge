@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import { Provider } from 'react-redux';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import createStore from './utils/createStore';
 import Tree from './components/Tree';
@@ -14,7 +15,9 @@ class App extends PureComponent {
   render() {
     return (
       <Provider store={this.store}>
-        <Tree />
+        <MuiThemeProvider>
+          <Tree />
+        </MuiThemeProvider>
       </Provider>
     );
   }

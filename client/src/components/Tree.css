@@ -6,17 +6,46 @@
     padding: 0;
 }
 
+.tree-item-wrapper {
+    margin-bottom: 5px;
+}
+
 .tree-item-folder {
     text-transform: uppercase;
     font-size: 1.05rem;
 }
 
 .tree-item-icon {
-  font-size: .6rem;
-  margin-right: 5px;
+    font-size: .6rem;
+    margin-right: 5px;
 }
 
 .tree-item-icon,
 .tree-item-number {
     color: #c3c3c3;
+}
+
+.actions {
+    display: flex;
+    justify-content: center;
+}
+
+.search-bar {
+    position: relative;
+    flex-basis: 50%;
+    margin-right: 2%;
+}
+
+.search-bar .icon-search {
+    position: absolute !important;
+    right: 0;
+    padding: 0 !important;
+}
+
+.search-bar .input-search {
+    width: 100% !important;
+}
+
+.include-children {
+    flex-basis: 10%;
 }
