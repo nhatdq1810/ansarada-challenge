@@ -1,0 +1,22 @@
+.tree-item {
+    border: none;
+    background: none;
+    cursor: pointer;
+    text-align: left;
+    padding: 0;
+}
+
+.tree-item-folder {
+    text-transform: uppercase;
+    font-size: 1.05rem;
+}
+
+.tree-item-icon {
+  font-size: .6rem;
+  margin-right: 5px;
+}
+
+.tree-item-icon,
+.tree-item-number {
+    color: #c3c3c3;
+}
