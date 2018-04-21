@@ -24,7 +24,7 @@ const assignChildrenToDoc = (parents, parentId, children) => {
   });
 }
 
-const expandParent = (parents, parentId) => {
+const toggleFolder = (parents, parentId) => {
   return parents.map((parent) => {
     if (parent.id === parentId) {
       return {
@@ -34,7 +34,7 @@ const expandParent = (parents, parentId) => {
     } else if (parent.children && parent.children.length > 0) {
       return {
         ...parent,
-        children: expandParent(parent.children, parentId),
+        children: toggleFolder(parent.children, parentId),
       }
     }
     return parent;
@@ -64,23 +64,24 @@ const app = (state = initialState, action) => {
       const { fetchInfo, documents } = action.payload;
 
       if (fetchInfo) {
-        let newDocuments = [];
-
         if (fetchInfo.parentId) {
-          newDocuments = assignChildrenToDoc(state.documents, fetchInfo.parentId, documents);
-        } else if (fetchInfo.includeChildren !== undefined) {
-          newDocuments = setExpandedStatus(documents, fetchInfo.includeChildren === 1);
+          return {
+            ...state,
+            documents: assignChildrenToDoc(state.documents, fetchInfo.parentId, documents),
+          }
         }
 
-        return {
-          ...state,
-          documents: newDocuments,
-        };
+        if (fetchInfo.includeChildren !== undefined) {
+          return {
+            ...state,
+            documents: setExpandedStatus(documents, fetchInfo.includeChildren === 1),
+          }
+        }
       }
 
       return {
         ...state,
-        documents: action.payload.documents.map((doc) => {
+        documents: documents.map((doc) => {
           return {
             ...doc,
             isExpanded: false,
@@ -89,9 +90,16 @@ const app = (state = initialState, action) => {
       };
     }
     case actionTypes.TOGGLE_FOLDER: {
+      if (action.payload === null) {
+        return {
+          ...state,
+          documents: setExpandedStatus(state.documents, false),
+        }
+      }
+
       return {
         ...state,
-        documents: expandParent(state.documents, action.payload),
+        documents: toggleFolder(state.documents, action.payload),
       }
     }
     default:

@@ -1,6 +1,7 @@
 .tree-item {
     text-align: left !important;
-    width: 100%;
+    width: 90%;
+    margin-right: calc(10% - 50px) !important;
 }
 
 .tree-item > div {
@@ -52,4 +53,23 @@
 .actions-select {
   margin-top: .2rem;
   height: 100%;
+}
+
+.file-info {
+  display: flex;
+  justify-content: center;
+  margin: 15px 0;
+}
+
+.file-info-detail {
+  flex-basis: 50%;
+  margin-left: 15px;
+}
+
+.file-info-detail-name {
+  margin-bottom: 5px;
+}
+
+.file-info-detail-size {
+  color: #c3c3c3;
 }

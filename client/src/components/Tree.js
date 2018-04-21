@@ -9,6 +9,8 @@ import IconButton from 'material-ui/IconButton';
 import KeyboardArrowRight from 'material-ui/svg-icons/hardware/keyboard-arrow-right';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
+import ActionSettings from 'material-ui/svg-icons/action/settings';
+import EditorFile from 'material-ui/svg-icons/editor/insert-drive-file';
 
 import { getDocuments } from '../selectors';
 import { actions } from '../actions';
@@ -22,6 +24,9 @@ class Tree extends PureComponent {
       searchInput: '',
       isActionsOpen: false,
       anchorEl: null,
+      isFileInfoOpen: false,
+      fileInfoAnchorEl: null,
+      selectedFile: {},
     };
   }
 
@@ -32,10 +37,35 @@ class Tree extends PureComponent {
   itemClick = (item) => {
     if (item.children && item.children.length > 0) {
       this.props.toggleFolder(item.id);
-    } else {
+    } else if (item.isFolder) {
       const { searchInput } = this.state;
       this.props.fetchDocuments({ search: searchInput, parentId: item.id });
     }
+  }
+
+  calcFileSize = (fileSize) => {
+    if (fileSize > 1000000000) {
+      return `${(fileSize / 1000000000).toFixed(3)}GB`;
+    }
+    if (fileSize > 1000000) {
+      return `${(fileSize / 1000000).toFixed(3)}MB`;
+    }
+    if (fileSize > 1000) {
+      return `${(fileSize / 1000).toFixed(3)}KB`;
+    }
+    return `${fileSize}B`;
+  }
+
+  openFileInfo = (event, selectedFile) => {
+    this.setState({
+      isFileInfoOpen: true,
+      fileInfoAnchorEl: event.currentTarget,
+      selectedFile: { ...selectedFile, fileSize: this.calcFileSize(selectedFile.fileSize) },
+    });
+  }
+
+  closeFileInfo = () => {
+    this.setState({ isFileInfoOpen: false });
   }
 
   renderChildren = (children) => {
@@ -58,12 +88,18 @@ class Tree extends PureComponent {
                           <i className="tree-item-icon">&#9660;</i>
                           : <i className="tree-item-icon">&#9658;</i>
                       )
-                      : null
+                      : <EditorFile color="red" />
                   } <span className="tree-item-number">{child.number}</span> <span className="tree-item-name">{child.name}</span>
                 </FlatButton>
                 {
                   hasChildren && child.isExpanded &&
                   this.renderChildren(child.children)
+                }
+                {
+                  !child.isFolder &&
+                  <IconButton className="icon-info" onClick={(event) => { this.openFileInfo(event, child); }}>
+                    <ActionSettings />
+                  </IconButton>
                 }
               </li>
             );
@@ -79,11 +115,8 @@ class Tree extends PureComponent {
 
   search = () => {
     const { searchInput } = this.state;
-    this.props.fetchDocuments({ search: searchInput });
-  }
-
-  changeIncludeChildren = (event, index, value) => {
-    this.props.fetchDocuments({ includeChildren: value });
+    const payload = searchInput === '' ? {} : { search: searchInput, includeChildren: 1 };
+    this.props.fetchDocuments(payload);
   }
 
   openActions = (event) => {
@@ -95,11 +128,15 @@ class Tree extends PureComponent {
   }
 
   handleExpand = (event, value) => {
-    this.props.fetchDocuments({ includeChildren: value });
+    if (value) {
+      this.props.fetchDocuments({ search: this.state.searchInput, includeChildren: value });
+    } else {
+      this.props.toggleFolder(null);
+    }
   }
 
   render() {
-    const { searchInput, isActionsOpen, anchorEl } = this.state;
+    const { searchInput, isActionsOpen, anchorEl, isFileInfoOpen, fileInfoAnchorEl, selectedFile } = this.state;
 
     return (
       <Fragment>
@@ -119,6 +156,19 @@ class Tree extends PureComponent {
           </Popover>
         </div>
         {this.renderChildren(this.props.documents)}
+        <Popover
+          open={isFileInfoOpen}
+          anchorEl={fileInfoAnchorEl}
+          onRequestClose={this.closeFileInfo}
+        >
+          <div className="file-info">
+            <EditorFile color="red" />
+            <div className="file-info-detail">
+              <p className="file-info-detail-name">{selectedFile.name}</p>
+              <small className="file-info-detail-size">{selectedFile.fileSize}</small>
+            </div>
+          </div>
+        </Popover>
       </Fragment>
     );
   }

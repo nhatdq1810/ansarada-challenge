@@ -11,3 +11,7 @@ ul {
 span {
   line-height: 1.45;
 }
+
+p {
+  margin: 0;
+}
