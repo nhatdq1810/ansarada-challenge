@@ -1,9 +1,12 @@
 .tree-item {
-    border: none;
-    background: none;
-    cursor: pointer;
-    text-align: left;
-    padding: 0;
+    text-align: left !important;
+    width: 100%;
+}
+
+.tree-item > div {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .tree-item-wrapper {
@@ -46,6 +49,7 @@
     width: 100% !important;
 }
 
-.include-children {
-    flex-basis: 10%;
+.actions-select {
+  margin-top: .2rem;
+  height: 100%;
 }

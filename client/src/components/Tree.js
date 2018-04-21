@@ -2,12 +2,13 @@ import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
-import SelectField from 'material-ui/SelectField';
-import MenuItem from 'material-ui/MenuItem';
+import Popover from 'material-ui/Popover/Popover';
+import { Menu, MenuItem } from 'material-ui/Menu';
 import TextField from 'material-ui/TextField';
 import IconButton from 'material-ui/IconButton';
 import KeyboardArrowRight from 'material-ui/svg-icons/hardware/keyboard-arrow-right';
 import FlatButton from 'material-ui/FlatButton';
+import RaisedButton from 'material-ui/RaisedButton';
 
 import { getDocuments } from '../selectors';
 import { actions } from '../actions';
@@ -19,7 +20,8 @@ class Tree extends PureComponent {
 
     this.state = {
       searchInput: '',
-      includeChildren: 0,
+      isActionsOpen: false,
+      anchorEl: null,
     };
   }
 
@@ -31,8 +33,8 @@ class Tree extends PureComponent {
     if (item.children && item.children.length > 0) {
       this.props.toggleFolder(item.id);
     } else {
-      const { searchInput, includeChildren } = this.state;
-      this.props.fetchDocuments({ search: searchInput, includeChildren, parentId: item.id });
+      const { searchInput } = this.state;
+      this.props.fetchDocuments({ search: searchInput, parentId: item.id });
     }
   }
 
@@ -76,33 +78,45 @@ class Tree extends PureComponent {
   }
 
   search = () => {
-    const { searchInput, includeChildren } = this.state;
-    this.props.fetchDocuments({ search: searchInput, includeChildren });
+    const { searchInput } = this.state;
+    this.props.fetchDocuments({ search: searchInput });
   }
 
   changeIncludeChildren = (event, index, value) => {
-    this.setState(
-      { includeChildren: value },
-      () => {
-        this.search();
-      },
-    );
+    this.props.fetchDocuments({ includeChildren: value });
+  }
+
+  openActions = (event) => {
+    this.setState({ isActionsOpen: true, anchorEl: event.currentTarget });
+  }
+
+  closeActions = () => {
+    this.setState({ isActionsOpen: false });
+  }
+
+  handleExpand = (event, value) => {
+    this.props.fetchDocuments({ includeChildren: value });
   }
 
   render() {
+    const { searchInput, isActionsOpen, anchorEl } = this.state;
+
     return (
       <Fragment>
         <div className="actions">
           <div className="search-bar">
-            <TextField className="input-search" hintText="Search ..." onChange={this.inputSearch} value={this.state.searchInput} />
+            <TextField className="input-search" hintText="Search ..." onChange={this.inputSearch} value={searchInput} />
             <IconButton className="icon-search" onClick={this.search}>
               <KeyboardArrowRight />
             </IconButton>
           </div>
-          <SelectField className="include-children" autoWidth value={this.state.includeChildren} onChange={this.changeIncludeChildren}>
-            <MenuItem value={1} primaryText="Expand all" />
-            <MenuItem value={0} primaryText="Collapse all" />
-          </SelectField>
+          <RaisedButton className="actions-select" label="Actions" onClick={this.openActions} />
+          <Popover open={isActionsOpen} anchorEl={anchorEl} onRequestClose={this.closeActions}>
+            <Menu onChange={this.handleExpand}>
+              <MenuItem value={1} primaryText="Expand all" />
+              <MenuItem value={0} primaryText="Collapse all" />
+            </Menu>
+          </Popover>
         </div>
         {this.renderChildren(this.props.documents)}
       </Fragment>
