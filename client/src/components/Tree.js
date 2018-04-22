@@ -3,17 +3,13 @@ import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import Popover from 'material-ui/Popover/Popover';
-import { Menu, MenuItem } from 'material-ui/Menu';
-import TextField from 'material-ui/TextField';
-import IconButton from 'material-ui/IconButton';
-import KeyboardArrowRight from 'material-ui/svg-icons/hardware/keyboard-arrow-right';
-import FlatButton from 'material-ui/FlatButton';
-import RaisedButton from 'material-ui/RaisedButton';
-import ActionSettings from 'material-ui/svg-icons/action/settings';
 import EditorFile from 'material-ui/svg-icons/editor/insert-drive-file';
 
 import { getDocuments } from '../selectors';
 import { actions } from '../actions';
+import TreeItem from './TreeItem';
+import SearchBar from './SearchBar';
+import Actions from './Actions';
 import './Tree.css';
 
 class Tree extends PureComponent {
@@ -45,15 +41,15 @@ class Tree extends PureComponent {
 
   calcFileSize = (fileSize) => {
     if (fileSize > 1000000000) {
-      return `${(fileSize / 1000000000).toFixed(3)}GB`;
+      return `${(fileSize / 1000000000).toFixed(3)} GB`;
     }
     if (fileSize > 1000000) {
-      return `${(fileSize / 1000000).toFixed(3)}MB`;
+      return `${(fileSize / 1000000).toFixed(3)} MB`;
     }
     if (fileSize > 1000) {
-      return `${(fileSize / 1000).toFixed(3)}KB`;
+      return `${(fileSize / 1000).toFixed(3)} KB`;
     }
-    return `${fileSize}B`;
+    return `${fileSize} B`;
   }
 
   openFileInfo = (event, selectedFile) => {
@@ -73,35 +69,14 @@ class Tree extends PureComponent {
       <ul>
         {
           children.map((child) => {
-            const hasChildren = child.children && child.children.length > 0;
-
             return (
-              <li className="tree-item-wrapper" key={`${child.number}-${child.name}`}>
-                <FlatButton
-                  className={`${child.isFolder ? 'tree-item tree-item-folder' : 'tree-item'}`}
-                  onClick={() => { this.itemClick(child); }}
-                >
-                  {
-                    child.isFolder ?
-                      (
-                        child.isExpanded ?
-                          <i className="tree-item-icon">&#9660;</i>
-                          : <i className="tree-item-icon">&#9658;</i>
-                      )
-                      : <EditorFile color="red" />
-                  } <span className="tree-item-number">{child.number}</span> <span className="tree-item-name">{child.name}</span>
-                </FlatButton>
-                {
-                  hasChildren && child.isExpanded &&
-                  this.renderChildren(child.children)
-                }
-                {
-                  !child.isFolder &&
-                  <IconButton className="icon-info" onClick={(event) => { this.openFileInfo(event, child); }}>
-                    <ActionSettings />
-                  </IconButton>
-                }
-              </li>
+              <TreeItem
+                key={`${child.number}-${child.name}`}
+                item={child}
+                itemClick={this.itemClick}
+                renderChildren={this.renderChildren}
+                openFileInfo={this.openFileInfo}
+              />
             );
           })
         }
@@ -140,20 +115,15 @@ class Tree extends PureComponent {
 
     return (
       <Fragment>
-        <div className="actions">
-          <div className="search-bar">
-            <TextField className="input-search" hintText="Search ..." onChange={this.inputSearch} value={searchInput} />
-            <IconButton className="icon-search" onClick={this.search}>
-              <KeyboardArrowRight />
-            </IconButton>
-          </div>
-          <RaisedButton className="actions-select" label="Actions" onClick={this.openActions} />
-          <Popover open={isActionsOpen} anchorEl={anchorEl} onRequestClose={this.closeActions}>
-            <Menu onChange={this.handleExpand}>
-              <MenuItem value={1} primaryText="Expand all" />
-              <MenuItem value={0} primaryText="Collapse all" />
-            </Menu>
-          </Popover>
+        <div className="utils">
+          <SearchBar inputSearch={this.inputSearch} searchInput={searchInput} search={this.search} />
+          <Actions
+            openActions={this.openActions}
+            isActionsOpen={isActionsOpen}
+            anchorEl={anchorEl}
+            closeActions={this.closeActions}
+            handleExpand={this.handleExpand}
+          />
         </div>
         {this.renderChildren(this.props.documents)}
         <Popover
